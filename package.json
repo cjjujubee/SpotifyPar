@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/OoogleBoogle/SpotifyPar/issues"
   },
-  "homepage": "https://github.com/OoogleBoogle/SpotifyPar#readme"
+  "homepage": "https://github.com/OoogleBoogle/SpotifyPar#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "unirest": "^0.4.2"
+  }
 }
