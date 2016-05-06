@@ -1,82 +1,52 @@
-// Try writing a simple progress bar in the callback style. Your progress bar should have three callbacks,
-// onStart, onProgress, and onEnd. When you call a start function of the progress bar it should call the
-// onStart callback, and begin count from 1 to 100. Every 10 items it counts it should call the onProgress callback,
-// providing how far along it is as an argument. Finally it should call the onEnd callback.
+var events = require('events');
 
-// var progressBar = function(secondsPast, callback) {
-//   setTimeout(function() {
-//     callback();
-//   }, secondsPast * 1000)
-// };
+var progressBar = new events.EventEmitter();
 
-// call progressBar 'start' with no seconds a call back => logs something
-  // nested callbacks inside? nested timeouts??
-// var progressBar = 0;
-// var onStart = function() {
-//   for (var i = 0; i <= 100; i++) {
-//     var onProgress = function(progress, callback) {
-//       setTimeout(function)
-//     }
-
-    // if (i === 0) {
-    //   progressBar(0, function() {
-    //
-    //   });
-    // }
-    // else if (i % 10 === 0) {
-    //   onProgress
-    // }
-    // else if (i === 100) {
-    //   onEnd
-    // }
-//   }
-// }
-
-var progress = function(onStart, onProgress, onEnd) {
-  var i;
-  for (i = 0; i <= 100; i++) {
-    if (i === 0) {
-      onStart(i);
-    }
-    else if (i === 100) {
-      onEnd(i);
-    }
-    else if (i % 10 === 0) {
-      onProgress(i);
-    }
-  }
-};
-
-progress(function(start) {
-  console.log(start);
-}, function(middle) {
-  console.log(middle);
-}, function(end) {
-  console.log(end);
+progressBar.on('onStart', function(count) {
+  console.log('Started at: ' + count);
 });
 
+progressBar.on('onProgress', function(count) {
+  console.log('You are currently at: ' + count + '%');
+});
 
-// var onStart = function(secondsPast, callback) {
-//   setTimeout(function() {
-//
-//   })
+progressBar.on('onEnd', function(count) {
+  console.log('All done at ' + count + '!');
+});
+
+for (var i = 0; i <= 100; i++) {
+    if (i === 0) {
+      progressBar.emit('onStart', i);
+    }
+    else if (i === 100) {
+      progressBar.emit('onEnd', i);
+    }
+    else if (i % 10 === 0) {
+      progressBar.emit('onProgress', i);
+    }
+}
+
+
+
+// var progress = function(onStart, onProgress, onEnd) {
+//   var i;
+//   for (i = 0; i <= 100; i++) {
+//     if (i === 0) {
+//       progressBar.emit(onStart, i);
+//     }
+//     else if (i === 100) {
+//       onEnd(i);
+//     }
+//     else if (i % 10 === 0) {
+//       onProgress(i);
+//     }
+//   }
 // };
-
-// var makeHistory = function(secondsPast, callback) {
 //
-//    setTimeout(function(){
-//        callback("An Historical Event");
-//    }, secondsPast * 1000)
-//
-// };
-
-// makeHistory(2, function(event) {
-//    historyString += event;
-//    historyString += " and More stuff happened before ";
-//    makeHistory(1, function(event) {
-//        historyString += event;
-//        historyString += " and this too";
-//        console.log(historyString);
-//    });
-//
+// progress(function(start) {
+//   console.log(start);
+// }, function(middle) {
+//   console.log(middle);
+// }, function(end) {
+//   console.log(end);
 // });
